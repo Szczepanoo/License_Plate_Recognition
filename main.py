@@ -6,7 +6,7 @@ import pytesseract
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-img = cv2.imread('images\\Cars4.png')
+img = cv2.imread('images\\Cars146.png')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 gray = cv2.GaussianBlur(gray, (3, 3), 1)
@@ -26,7 +26,7 @@ contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]  # Sortowani
 location = None
 for contour in contours:
     approx = cv2.approxPolyDP(contour, 10, True)  # Uproszczenie konturów
-    if len(approx) == 4:  # Sprawdzenie czy jest czworokątek
+    if len(approx) == 4:  # Sprawdzenie czy jest czworokątem
         location = approx  # 4 wierzchołki konturu
         break
 
@@ -58,6 +58,7 @@ cv2.imshow('cropped', cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB))
 cv2.waitKey(0)
 
 text = pytesseract.image_to_string(cropped_image)
+
 #Usunięcie spacji, małych liter i interpunkcji
 text_fixed = ''.join([c for c in text if c.isupper() or c.isdigit() or c.isalpha()])
 
